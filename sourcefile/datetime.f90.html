@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.8% of total for source files.">64 statements</a>
+    title=" 2.2% of total for source files.">80 statements</a>
      </li> 
      
      
@@ -296,73 +296,94 @@
 <a name="ln-33"></a>      <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span> <span class="kd">::</span> <span class="n">to_string</span> <span class="o">=&gt;</span> <span class="n">time_to_string</span>
 <a name="ln-34"></a>   <span class="k">end type</span>
 <a name="ln-35"></a>
-<a name="ln-36"></a>
-<a name="ln-37"></a>   <span class="c">!&gt; TOML date value (YYYY-MM-DD)</span>
-<a name="ln-38"></a>   <span class="k">type</span> <span class="kd">::</span> <span class="n">toml_date</span>
-<a name="ln-39"></a>      <span class="kt">integer</span> <span class="kd">::</span> <span class="n">year</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-40"></a>      <span class="kt">integer</span> <span class="kd">::</span> <span class="n">month</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-41"></a>      <span class="kt">integer</span> <span class="kd">::</span> <span class="n">day</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-42"></a>   <span class="k">contains</span>
-<a name="ln-43"></a><span class="k">      generic</span> <span class="kd">::</span> <span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">to_string</span>
-<a name="ln-44"></a>      <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span> <span class="kd">::</span> <span class="n">to_string</span> <span class="o">=&gt;</span> <span class="n">date_to_string</span>
-<a name="ln-45"></a>   <span class="k">end type</span>
-<a name="ln-46"></a>
-<a name="ln-47"></a>
-<a name="ln-48"></a>   <span class="c">!&gt; TOML datatime value type</span>
-<a name="ln-49"></a>   <span class="k">type</span> <span class="kd">::</span> <span class="n">toml_datetime</span>
-<a name="ln-50"></a>      <span class="k">type</span><span class="p">(</span><span class="n">toml_date</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">date</span>
-<a name="ln-51"></a>      <span class="k">type</span><span class="p">(</span><span class="n">toml_time</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="nb">time</span>
-<a name="ln-52"></a><span class="nb">   </span><span class="k">contains</span>
-<a name="ln-53"></a><span class="k">      generic</span> <span class="kd">::</span> <span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">to_string</span>
-<a name="ln-54"></a>      <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span> <span class="kd">::</span> <span class="n">to_string</span> <span class="o">=&gt;</span> <span class="n">datetime_to_string</span>
-<a name="ln-55"></a>   <span class="k">end type</span>
-<a name="ln-56"></a>
-<a name="ln-57"></a>
-<a name="ln-58"></a><span class="k">contains</span>
-<a name="ln-59"></a>
+<a name="ln-36"></a><span class="k">   interface </span><span class="n">toml_time</span>
+<a name="ln-37"></a>      <span class="k">module procedure</span> <span class="kd">::</span> <span class="n">new_toml_time</span>
+<a name="ln-38"></a>   <span class="k">end interface </span><span class="n">toml_time</span>
+<a name="ln-39"></a>
+<a name="ln-40"></a>
+<a name="ln-41"></a>   <span class="c">!&gt; TOML date value (YYYY-MM-DD)</span>
+<a name="ln-42"></a>   <span class="k">type</span> <span class="kd">::</span> <span class="n">toml_date</span>
+<a name="ln-43"></a>      <span class="kt">integer</span> <span class="kd">::</span> <span class="n">year</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-44"></a>      <span class="kt">integer</span> <span class="kd">::</span> <span class="n">month</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-45"></a>      <span class="kt">integer</span> <span class="kd">::</span> <span class="n">day</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-46"></a>   <span class="k">contains</span>
+<a name="ln-47"></a><span class="k">      generic</span> <span class="kd">::</span> <span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">to_string</span>
+<a name="ln-48"></a>      <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span> <span class="kd">::</span> <span class="n">to_string</span> <span class="o">=&gt;</span> <span class="n">date_to_string</span>
+<a name="ln-49"></a>   <span class="k">end type</span>
+<a name="ln-50"></a>
+<a name="ln-51"></a>
+<a name="ln-52"></a>   <span class="c">!&gt; TOML datatime value type</span>
+<a name="ln-53"></a>   <span class="k">type</span> <span class="kd">::</span> <span class="n">toml_datetime</span>
+<a name="ln-54"></a>      <span class="k">type</span><span class="p">(</span><span class="n">toml_date</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">date</span>
+<a name="ln-55"></a>      <span class="k">type</span><span class="p">(</span><span class="n">toml_time</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="nb">time</span>
+<a name="ln-56"></a><span class="nb">   </span><span class="k">contains</span>
+<a name="ln-57"></a><span class="k">      generic</span> <span class="kd">::</span> <span class="n">assignment</span><span class="p">(</span><span class="o">=</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">to_string</span>
+<a name="ln-58"></a>      <span class="k">procedure</span><span class="p">,</span> <span class="k">pass</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span> <span class="kd">::</span> <span class="n">to_string</span> <span class="o">=&gt;</span> <span class="n">datetime_to_string</span>
+<a name="ln-59"></a>   <span class="k">end type</span>
 <a name="ln-60"></a>
-<a name="ln-61"></a><span class="k">subroutine </span><span class="n">date_to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
-<a name="ln-62"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span>
-<a name="ln-63"></a>   <span class="k">class</span><span class="p">(</span><span class="n">toml_date</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rhs</span>
-<a name="ln-64"></a>   <span class="k">allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span><span class="p">)</span>
-<a name="ln-65"></a>   <span class="k">write</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s1">&#39;(i4.4,&quot;-&quot;,i2.2,&quot;-&quot;,i2.2)&#39;</span><span class="p">)</span> <span class="p">&amp;</span>
-<a name="ln-66"></a>      <span class="p">&amp;</span>  <span class="n">rhs</span><span class="p">%</span><span class="n">year</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">month</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">day</span>
-<a name="ln-67"></a><span class="k">end subroutine </span><span class="n">date_to_string</span>
-<a name="ln-68"></a>
-<a name="ln-69"></a>
-<a name="ln-70"></a><span class="k">subroutine </span><span class="n">time_to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
-<a name="ln-71"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span>
-<a name="ln-72"></a>   <span class="k">class</span><span class="p">(</span><span class="n">toml_time</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rhs</span>
-<a name="ln-73"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">millisec</span><span class="p">))</span> <span class="k">then</span>
-<a name="ln-74"></a><span class="k">      allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span><span class="p">)</span>
-<a name="ln-75"></a>      <span class="k">write</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s1">&#39;(i2.2,&quot;:&quot;,i2.2,&quot;:&quot;,i2.2,&quot;.&quot;,i3.3)&#39;</span><span class="p">)</span> <span class="p">&amp;</span>
-<a name="ln-76"></a>         <span class="p">&amp;</span>  <span class="n">rhs</span><span class="p">%</span><span class="n">hour</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">minute</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="nb">second</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">millisec</span>
-<a name="ln-77"></a>   <span class="k">else</span>
-<a name="ln-78"></a><span class="k">      allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span><span class="p">)</span>
-<a name="ln-79"></a>      <span class="k">write</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s1">&#39;(i2.2,&quot;:&quot;,i2.2,&quot;:&quot;,i2.2)&#39;</span><span class="p">)</span> <span class="p">&amp;</span>
-<a name="ln-80"></a>         <span class="p">&amp;</span>  <span class="n">rhs</span><span class="p">%</span><span class="n">hour</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">minute</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="nb">second</span>
-<a name="ln-81"></a><span class="nb">   </span><span class="k">end if</span>
-<a name="ln-82"></a><span class="k">   if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">zone</span><span class="p">))</span> <span class="n">lhs</span> <span class="o">=</span> <span class="n">lhs</span> <span class="o">//</span> <span class="nb">trim</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">zone</span><span class="p">)</span>
-<a name="ln-83"></a><span class="k">end subroutine </span><span class="n">time_to_string</span>
-<a name="ln-84"></a>
-<a name="ln-85"></a>
-<a name="ln-86"></a><span class="k">subroutine </span><span class="n">datetime_to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
-<a name="ln-87"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span>
-<a name="ln-88"></a>   <span class="k">class</span><span class="p">(</span><span class="n">toml_datetime</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rhs</span>
-<a name="ln-89"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">temporary</span>
-<a name="ln-90"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">date</span><span class="p">))</span> <span class="k">then</span>
-<a name="ln-91"></a><span class="k">      call </span><span class="n">rhs</span><span class="p">%</span><span class="n">date</span><span class="p">%</span><span class="n">to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
-<a name="ln-92"></a>      <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="nb">time</span><span class="p">))</span> <span class="k">then</span>
-<a name="ln-93"></a><span class="k">         call </span><span class="n">rhs</span><span class="p">%</span><span class="nb">time</span><span class="p">%</span><span class="n">to_string</span><span class="p">(</span><span class="n">temporary</span><span class="p">)</span>
-<a name="ln-94"></a>         <span class="n">lhs</span> <span class="o">=</span> <span class="n">lhs</span> <span class="o">//</span> <span class="n">tfc_</span><span class="s1">&#39;T&#39;</span> <span class="o">//</span> <span class="n">temporary</span>
-<a name="ln-95"></a>      <span class="k">end if</span>
-<a name="ln-96"></a><span class="k">   else</span>
-<a name="ln-97"></a><span class="k">      if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="nb">time</span><span class="p">))</span> <span class="n">lhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="p">%</span><span class="nb">time</span>
-<a name="ln-98"></a><span class="nb">   </span><span class="k">end if</span>
-<a name="ln-99"></a><span class="k">end subroutine </span><span class="n">datetime_to_string</span>
-<a name="ln-100"></a>
-<a name="ln-101"></a>
-<a name="ln-102"></a><span class="k">end module </span><span class="n">tomlf_datetime</span>
+<a name="ln-61"></a>
+<a name="ln-62"></a><span class="k">contains</span>
+<a name="ln-63"></a>
+<a name="ln-64"></a>
+<a name="ln-65"></a><span class="k">subroutine </span><span class="n">date_to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+<a name="ln-66"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span>
+<a name="ln-67"></a>   <span class="k">class</span><span class="p">(</span><span class="n">toml_date</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rhs</span>
+<a name="ln-68"></a>   <span class="k">allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span><span class="p">)</span>
+<a name="ln-69"></a>   <span class="k">write</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s1">&#39;(i4.4,&quot;-&quot;,i2.2,&quot;-&quot;,i2.2)&#39;</span><span class="p">)</span> <span class="p">&amp;</span>
+<a name="ln-70"></a>      <span class="p">&amp;</span>  <span class="n">rhs</span><span class="p">%</span><span class="n">year</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">month</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">day</span>
+<a name="ln-71"></a><span class="k">end subroutine </span><span class="n">date_to_string</span>
+<a name="ln-72"></a>
+<a name="ln-73"></a>
+<a name="ln-74"></a><span class="k">subroutine </span><span class="n">time_to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+<a name="ln-75"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span>
+<a name="ln-76"></a>   <span class="k">class</span><span class="p">(</span><span class="n">toml_time</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rhs</span>
+<a name="ln-77"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">millisec</span><span class="p">))</span> <span class="k">then</span>
+<a name="ln-78"></a><span class="k">      allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span><span class="p">)</span>
+<a name="ln-79"></a>      <span class="k">write</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s1">&#39;(i2.2,&quot;:&quot;,i2.2,&quot;:&quot;,i2.2,&quot;.&quot;,i3.3)&#39;</span><span class="p">)</span> <span class="p">&amp;</span>
+<a name="ln-80"></a>         <span class="p">&amp;</span>  <span class="n">rhs</span><span class="p">%</span><span class="n">hour</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">minute</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="nb">second</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">millisec</span>
+<a name="ln-81"></a>   <span class="k">else</span>
+<a name="ln-82"></a><span class="k">      allocate</span><span class="p">(</span><span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span><span class="p">)</span>
+<a name="ln-83"></a>      <span class="k">write</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="s1">&#39;(i2.2,&quot;:&quot;,i2.2,&quot;:&quot;,i2.2)&#39;</span><span class="p">)</span> <span class="p">&amp;</span>
+<a name="ln-84"></a>         <span class="p">&amp;</span>  <span class="n">rhs</span><span class="p">%</span><span class="n">hour</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="n">minute</span><span class="p">,</span> <span class="n">rhs</span><span class="p">%</span><span class="nb">second</span>
+<a name="ln-85"></a><span class="nb">   </span><span class="k">end if</span>
+<a name="ln-86"></a><span class="k">   if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">zone</span><span class="p">))</span> <span class="n">lhs</span> <span class="o">=</span> <span class="n">lhs</span> <span class="o">//</span> <span class="nb">trim</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">zone</span><span class="p">)</span>
+<a name="ln-87"></a><span class="k">end subroutine </span><span class="n">time_to_string</span>
+<a name="ln-88"></a>
+<a name="ln-89"></a>
+<a name="ln-90"></a><span class="k">subroutine </span><span class="n">datetime_to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+<a name="ln-91"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">lhs</span>
+<a name="ln-92"></a>   <span class="k">class</span><span class="p">(</span><span class="n">toml_datetime</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">rhs</span>
+<a name="ln-93"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">tfc</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">temporary</span>
+<a name="ln-94"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="n">date</span><span class="p">))</span> <span class="k">then</span>
+<a name="ln-95"></a><span class="k">      call </span><span class="n">rhs</span><span class="p">%</span><span class="n">date</span><span class="p">%</span><span class="n">to_string</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+<a name="ln-96"></a>      <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="nb">time</span><span class="p">))</span> <span class="k">then</span>
+<a name="ln-97"></a><span class="k">         call </span><span class="n">rhs</span><span class="p">%</span><span class="nb">time</span><span class="p">%</span><span class="n">to_string</span><span class="p">(</span><span class="n">temporary</span><span class="p">)</span>
+<a name="ln-98"></a>         <span class="n">lhs</span> <span class="o">=</span> <span class="n">lhs</span> <span class="o">//</span> <span class="n">tfc_</span><span class="s1">&#39;T&#39;</span> <span class="o">//</span> <span class="n">temporary</span>
+<a name="ln-99"></a>      <span class="k">end if</span>
+<a name="ln-100"></a><span class="k">   else</span>
+<a name="ln-101"></a><span class="k">      if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">rhs</span><span class="p">%</span><span class="nb">time</span><span class="p">))</span> <span class="n">lhs</span> <span class="o">=</span> <span class="n">rhs</span><span class="p">%</span><span class="nb">time</span>
+<a name="ln-102"></a><span class="nb">   </span><span class="k">end if</span>
+<a name="ln-103"></a><span class="k">end subroutine </span><span class="n">datetime_to_string</span>
+<a name="ln-104"></a>
+<a name="ln-105"></a>
+<a name="ln-106"></a><span class="c">!&gt; Constructor for toml_time type, necessary due to PGI bug in NVHPC 20.7 and 20.9</span>
+<a name="ln-107"></a><span class="k">elemental function </span><span class="n">new_toml_time</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="nb">second</span><span class="p">,</span> <span class="n">millisec</span><span class="p">,</span> <span class="n">zone</span><span class="p">)</span> <span class="p">&amp;</span>
+<a name="ln-108"></a>      <span class="p">&amp;</span> <span class="k">result</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+<a name="ln-109"></a>   <span class="kt">integer</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">hour</span>
+<a name="ln-110"></a>   <span class="kt">integer</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">minute</span>
+<a name="ln-111"></a>   <span class="kt">integer</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span> <span class="k">optional</span> <span class="kd">::</span> <span class="nb">second</span>
+<a name="ln-112"></a><span class="nb">   </span><span class="kt">integer</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">millisec</span>
+<a name="ln-113"></a>   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span> <span class="k">optional</span> <span class="kd">::</span> <span class="n">zone</span>
+<a name="ln-114"></a>   <span class="k">type</span><span class="p">(</span><span class="n">toml_time</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span>
+<a name="ln-115"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">hour</span><span class="p">))</span> <span class="n">self</span><span class="p">%</span><span class="n">hour</span> <span class="o">=</span> <span class="n">hour</span>
+<a name="ln-116"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">minute</span><span class="p">))</span> <span class="n">self</span><span class="p">%</span><span class="n">minute</span> <span class="o">=</span> <span class="n">minute</span>
+<a name="ln-117"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="nb">second</span><span class="p">))</span> <span class="n">self</span><span class="p">%</span><span class="nb">second</span> <span class="o">=</span> <span class="nb">second</span>
+<a name="ln-118"></a><span class="nb">   </span><span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">millisec</span><span class="p">))</span> <span class="n">self</span><span class="p">%</span><span class="n">millisec</span> <span class="o">=</span> <span class="n">millisec</span>
+<a name="ln-119"></a>   <span class="k">if</span> <span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">zone</span><span class="p">))</span> <span class="n">self</span><span class="p">%</span><span class="n">zone</span> <span class="o">=</span> <span class="n">zone</span>
+<a name="ln-120"></a><span class="k">end function </span><span class="n">new_toml_time</span>
+<a name="ln-121"></a>
+<a name="ln-122"></a>
+<a name="ln-123"></a><span class="k">end module </span><span class="n">tomlf_datetime</span>
 </pre></div>
 
     </section>
@@ -381,7 +402,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2020-11-17 09:53  
+             on 2020-11-21 10:49  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> TOML-Fortran was developed by Sebastian Ehlert</p></div>
